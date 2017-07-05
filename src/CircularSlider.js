@@ -82,7 +82,7 @@ export default class CircularSlider extends PureComponent {
     this._sleepPanResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => this.setCircleCenter(),
+
       onPanResponderMove: (evt, { moveX, moveY }) => {
         const { circleCenterX, circleCenterY } = this.state;
         const { angleLength, startAngle, onUpdate } = this.props;
@@ -107,7 +107,7 @@ export default class CircularSlider extends PureComponent {
     this._wakePanResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => this.setCircleCenter(),
+
       onPanResponderMove: (evt, { moveX, moveY }) => {
         const { circleCenterX, circleCenterY } = this.state;
         const { angleLength, startAngle, onUpdate } = this.props;
@@ -129,7 +129,7 @@ export default class CircularSlider extends PureComponent {
   }
 
   setCircleCenter = () => {
-    this._circle.measure((x, y, w, h, px, py) => {
+    this._circle.measure((x, y, w, h, px , py) => {
       const halfOfContainer = this.getContainerWidth() / 2;
       this.setState({ circleCenterX: px + halfOfContainer, circleCenterY: py + halfOfContainer });
     });
@@ -207,47 +207,7 @@ export default class CircularSlider extends PureComponent {
               })
             }
 
-            {/*
-              ##### Stop Icon
-            */}
 
-            <G
-              fill={gradientColorTo}
-              transform={{ translate: `${stop.toX}, ${stop.toY}` }}
-              onPressIn={() => this.setState({ angleLength: angleLength + Math.PI / 2 })}
-              {...this._wakePanResponder.panHandlers}
-            >
-              <Circle
-                r={(strokeWidth - 1) / 2}
-                fill={bgCircleColor}
-                stroke={gradientColorTo}
-                strokeWidth="1"
-              />
-              {
-                stopIcon
-              }
-            </G>
-
-            {/*
-              ##### Start Icon
-            */}
-
-            <G
-              fill={gradientColorFrom}
-              transform={{ translate: `${start.fromX}, ${start.fromY}` }}
-              onPressIn={() => this.setState({ startAngle: startAngle - Math.PI / 2, angleLength: angleLength + Math.PI / 2 })}
-              {...this._sleepPanResponder.panHandlers}
-            >
-              <Circle
-                r={(strokeWidth - 1) / 2}
-                fill={bgCircleColor}
-                stroke={gradientColorFrom}
-                strokeWidth="1"
-              />
-              {
-                startIcon
-              }
-            </G>
           </G>
         </Svg>
       </View>
